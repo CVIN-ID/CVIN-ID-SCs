@@ -40,9 +40,9 @@ CVIN-ID-SCs/
    git clone https://github.com/CVIN-ID/CVIN-ID-SCs.git
    cd CVIN-ID-SCs
 Install dependencies:
-```bash
-Copy code
-npm install
+   ```bash
+   Copy code
+   npm install
 Compilation
 Compile the smart contracts:
 
