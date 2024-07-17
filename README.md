@@ -1,8 +1,6 @@
 # CVIN-ID-SCs
 Repository for CVIN smart contract implementations, scenarios, and testing suites.
 
-markdown
-Copy code
 # CVIN-ID Smart Contracts Repository
 
 Welcome to the CVIN-ID Smart Contracts repository. This repository contains implementations of various ERC standards tailored for decentralized identity (DID) management and smart contract-based accounts. The repository includes:
@@ -42,7 +40,7 @@ CVIN-ID-SCs/
    git clone https://github.com/CVIN-ID/CVIN-ID-SCs.git
    cd CVIN-ID-SCs
 Install dependencies:
-bash
+```bash
 Copy code
 npm install
 Compilation
