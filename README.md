@@ -43,6 +43,7 @@ Install dependencies:
    ```bash
    Copy code
    npm install
+
 Compilation
 Compile the smart contracts:
 
