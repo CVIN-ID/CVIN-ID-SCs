@@ -28,8 +28,6 @@ CVIN-ID-SCs/
 │ └── test/
 └── README.md
 
-markdown
-Copy code
 
 ## Getting Started
 
