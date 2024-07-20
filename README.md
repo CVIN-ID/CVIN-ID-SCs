@@ -1,247 +1,79 @@
-CVIN-ID Smart Contracts Repository
-==================================
 
-Welcome to the CVIN-ID Smart Contracts repository. This repository is part of MASc Thesis at the University of British Columbia Electrical and Computer Engineering Department, and Blockchain Interdisciplinary Research Cluster, contains implementations of various ERC standards tailored for decentralized identity (DID) management and smart contract-based accounts. The repository includes:
+# CVIN-ID Smart Contracts
 
-1.  **ERC721** - Non-fungible tokens for digital asset ownership.
-2.  **ERC725** - Base contracts for managing identities and smart contract-based accounts.
-3.  **ERC725X and ERC725Y** - Extensions of the ERC725 standard for enhanced functionality.
+## Overview
+This repository contains the implementation of smart contracts for the CVIN-ID project. The project aims to develop a secure and decentralized identity system for Connected and Autonomous Vehicles (CAVs) using blockchain technology and Self-Sovereign Identity (SSI) principles. 
 
-Repository Structure
---------------------
+### Thesis Abstract
+Digital identities and identity systems are being applied to many fields, including for machines in general as well as Connected and Autonomous Vehicles (CAVs). These systems are proving to be valuable for enabling secure communication, and verification of identities or associated information. Furthermore, digital identities enable decentralized and autonomous interactions between vehicles, enhancing security and efficiency in CAV networks. The leading paradigm and standards for building secure identities and supporting infrastructure is tending towards blockchain-based and Self-Sovereign Identity (SSI). In this paradigm, decentralized infrastructure and networks such as blockchains and distributed ledgers are used to build identity systems with primary building blocks of Decentralized Identities (DIDs), the associated data with identities known as Verifiable Credentials (VCs), and security algorithms and protocols such as encryption, signing of messages, and selective disclosure of information. Despite this, no work has been done on the convergence of SSI, CAVs, current decentralized networks, and blockchains, let alone benchmarking and stress testing of the various paradigms of implementing such systems via smart contracts or at least anchoring them to blockchains in some manner.
 
-bash
+## Repository Structure
 
-Copy code
+- **contracts/**: Contains the smart contract code.
+- **migrations/**: Contains migration scripts for deploying the smart contracts.
+- **test/**: Contains test cases for the smart contracts.
 
-`CVIN-ID-SCs/
-├── ERC721/
-│   ├── contracts/
-│   ├── scripts/
-│   └── test/
-├── ERC725/
-│   ├── contracts/
-│   ├── scripts/
-│   └── test/
-├── ERC725XY/
-│   ├── contracts/
-│   ├── scripts/
-│   └── test/
-└── README.md`
+## Smart Contracts
 
-Getting Started
----------------
+The smart contracts in this repository are designed to implement decentralized identity management for CAVs. The main components include:
+
+1. **Decentralized Identifiers (DIDs)**: Unique identifiers that are stored on the blockchain.
+2. **Verifiable Credentials (VCs)**: Digital statements that are cryptographically signed and can be verified on the blockchain.
+3. **Authentication and Authorization**: Protocols for ensuring secure communication and interaction between CAVs.
+
+## Implementation Details
+
+### Blockchain Integration
+The smart contracts are deployed on a blockchain network, leveraging its decentralized nature to ensure security and immutability. This approach aligns with the concepts discussed by [Aggarwal et al.](https://dx.doi.org/10.1109/CCiCT56684.2022.00067) and [Gilani et al.](https://dx.doi.org/10.1109/BRAINS49436.2020.9223312), who highlight the advantages of using blockchain for secure and decentralized identity management.
+
+### Self-Sovereign Identity (SSI)
+The implementation follows the SSI principles, giving users full control over their digital identities and personal data. This methodology is supported by the works of [Dixit et al.](https://dx.doi.org/10.1109/LCN53696.2022.9843700) and [Stockburger et al.](https://dx.doi.org/10.1016/J.BCRA.2021.100014), who emphasize the importance of user-centric identity management.
+
+### Security Protocols
+Security is ensured through the use of advanced cryptographic techniques, including encryption, digital signatures, and selective disclosure of information. This ensures that only authorized entities can access sensitive data, as discussed by [Bhattacharya et al.](https://dx.doi.org/10.1109/ISNCC49221.2020.9297357).
+
+## Getting Started
 
 ### Prerequisites
-
--   [Node.js](https://nodejs.org/) (v14 or higher)
--   [Hardhat](https://hardhat.org/)
+- Node.js
+- Truffle
+- Ganache
 
 ### Installation
-
-1.  Clone the repository:
-
-    bash
-
-    Copy code
-
-    `git clone https://github.com/CVIN-ID/CVIN-ID-SCs.git
-    cd CVIN-ID-SCs`
-
-2.  Install dependencies:
-
-    bash
-
-    Copy code
-
-    `npm install`
-
-Compilation
------------
-
-Compile the smart contracts:
-
-bash
-
-Copy code
-
-`npx hardhat compile`
-
-Deployment
-----------
-
-### ERC721
-
-#### Deploying the Regular ERC721 Contract
-
-Deploy the regular ERC721 contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployRegular.js --network localhost`
-
-#### Deploying the Monolithic ERC721 Contract
-
-Deploy the monolithic ERC721 contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployMonolithic.js --network localhost`
-
-#### Deploying Both ERC721 Contracts
-
-Deploy both the regular and monolithic ERC721 contracts to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployBoth.js --network localhost`
-
-### ERC725
-
-#### Deploying the ERC725 Basic Contract
-
-Deploy the ERC725 basic contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployERC725Basic.js --network localhost`
-
-#### Deploying the ERC725 Monolithic Contract
-
-Deploy the ERC725 monolithic contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployERC725Monolithic.js --network localhost`
-
-### ERC725X and ERC725Y
-
-#### Deploying the ERC725X Contract
-
-Deploy the ERC725X contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployERC725X.js --network localhost`
-
-#### Deploying the ERC725Y Contract
-
-Deploy the ERC725Y contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployERC725Y.js --network localhost`
-
-Testing
--------
-
-### ERC721
-
-#### Combined Test Suite
-
-Run the combined test suite for both regular and monolithic ERC721 contracts:
-
-bash
-
-Copy code
-
-`npx hardhat test test/combined.js`
-
-#### Extended Test Suite for Regular ERC721
-
-Run the extended test suite for the regular ERC721 contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/regularExtended.js`
-
-### ERC725
-
-#### Basic Test Suite
-
-Run the test suite for the ERC725 basic contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/erc725Basic.js`
-
-#### Extended Test Suite for ERC725
-
-Run the extended test suite for the ERC725 contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/erc725Extended.js`
-
-### ERC725X and ERC725Y
-
-#### ERC725X Test Suite
-
-Run the test suite for the ERC725X contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/erc725X.js`
-
-#### ERC725Y Test Suite
-
-Run the test suite for the ERC725Y contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/erc725Y.js`
-
-Summary
--------
-
-### ERC721 Contracts
-
--   **Regular ERC721 Contract**: Deploy using `deployRegular.js`.
--   **Monolithic ERC721 Contract**: Deploy using `deployMonolithic.js`.
--   **Both Contracts**: Deploy both using `deployBoth.js`.
-
-### ERC725 Contracts
-
--   **Basic ERC725 Contract**: Deploy using `deployERC725Basic.js`.
--   **Monolithic ERC725 Contract**: Deploy using `deployERC725Monolithic.js`.
-
-### ERC725X and ERC725Y Contracts
-
--   **ERC725X Contract**: Deploy using `deployERC725X.js`.
--   **ERC725Y Contract**: Deploy using `deployERC725Y.js`.
-
-Conclusion
-----------
-
-This repository provides a comprehensive framework for managing digital identities and smart contract-based accounts using ERC721, ERC725, ERC725X, and ERC725Y standards. Each implementation includes detailed test suites to ensure robust and secure functionality. The monolithic versions are included for comparative analysis and benchmarking purposes, while the regular versions are recommended for standard deployment and development.
-
-For more detailed information on each implementation, refer to the respective directories and README files.
-
-* * * * *
-
-For further details and contributions, visit the [CVIN-ID GitHub Repository](https://github.com/CVIN-ID/CVIN-ID-SCs).
-
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/CVIN-ID/CVIN-ID-SCs.git
+   ```
+2. Install dependencies:
+   ```bash
+   cd CVIN-ID-SCs
+   npm install
+   ```
+
+### Deployment
+1. Start Ganache:
+   ```bash
+   ganache-cli
+   ```
+2. Compile and deploy the contracts:
+   ```bash
+   truffle compile
+   truffle migrate
+   ```
+
+### Testing
+Run the test cases to ensure the smart contracts work as expected:
+```bash
+truffle test
+```
+
+## Contributing
+Contributions are welcome! Please follow the standard fork-and-pull request workflow:
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Create a new Pull Request
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
