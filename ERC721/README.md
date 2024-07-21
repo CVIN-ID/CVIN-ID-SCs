@@ -1,145 +1,105 @@
-ERC721 Smart Contracts
-======================
 
-This directory contains the ERC721 smart contract implementations for "CVIN_NFT_DID_ERC721" and "CVIN_NFT_DID_ERC721_Monolithic".
+# Implementation Variation I: ERC721
 
-Overview
---------
+## Overview
+This implementation variation focuses on using the ERC721 standard for non-fungible tokens (NFTs) to manage digital identities for Connected and Autonomous Vehicles (CAVs). By leveraging the unique properties of ERC721 tokens, we create a robust and secure identity management system that ensures each vehicle has a unique, verifiable identity on the blockchain.
 
-The ERC721 standard provides a framework for creating unique, non-fungible tokens (NFTs) on the blockchain. These tokens can represent ownership of any asset, digital or physical. The implementation includes functionalities for identity verification, toll payments, and warranty eligibility checks, emphasizing its utility in scenarios involving identity and secure transactions.
+### ERC721 Standard
+ERC721 is a widely adopted standard for creating non-fungible tokens on the Ethereum blockchain. Non-fungible tokens are unique and cannot be exchanged on a one-to-one basis with other tokens, making them ideal for representing distinct entities such as digital identities. Key functions of the ERC721 standard include:
+- **balanceOf**: Returns the number of NFTs owned by a given address.
+- **ownerOf**: Returns the owner of a specific NFT.
+- **transferFrom**: Transfers ownership of an NFT from one address to another.
+- **approve**: Approves another address to transfer a specific NFT.
+- **setApprovalForAll**: Approves or removes an operator's ability to transfer all of the caller’s NFTs.
 
-Key Features and Functionalities
---------------------------------
+### Implementation Details
 
-### Ownership Management
+#### Decentralized Identifiers (DIDs)
+In this implementation, each CAV is assigned a unique ERC721 token that serves as its Decentralized Identifier (DID). This token is minted upon the registration of the vehicle and is stored on the blockchain, ensuring immutability and security. The `mint` function of the ERC721 standard is utilized to create these unique tokens:
+```solidity
+function mint(address to, uint256 tokenId) external {
+    _mint(to, tokenId);
+}
+```
+This ensures that each DID is unique and cannot be duplicated, providing a secure method for identifying CAVs.
 
--   `owner()`: Returns the address of the current owner of the contract.
--   `transferOwnership(address newOwner)`: Allows the current owner to transfer ownership to a new account.
--   `renounceOwnership()`: Enables the owner to renounce their ownership, making the contract ownerless.
+#### Verifiable Credentials (VCs)
+Verifiable Credentials are linked to the DIDs and are stored as metadata within the ERC721 tokens. This metadata can include information such as the vehicle's make, model, year, and other relevant attributes. The `tokenURI` function of ERC721 is used to fetch this metadata:
+```solidity
+function tokenURI(uint256 tokenId) public view override returns (string memory) {
+    return _tokenURIs[tokenId];
+}
+```
+This function ensures that the VCs are easily accessible and verifiable by any party.
 
-### Token Management
+#### Authentication and Authorization
+The ERC721 standard's built-in functions for ownership and transfer are leveraged to manage authentication and authorization. The `approve` and `setApprovalForAll` functions are used to grant permissions to specific entities, allowing them to perform certain actions on behalf of the vehicle owner:
+```solidity
+function approve(address to, uint256 tokenId) public override {
+    address owner = ERC721.ownerOf(tokenId);
+    require(to != owner, "ERC721: approval to current owner");
 
--   `mint(address to, uint256 tokenId, string memory uri)`: Mints a new token with a specific URI to the given address.
--   `balanceOf(address owner)`: Returns the balance of the owner's tokens.
--   `ownerOf(uint256 tokenId)`: Returns the owner of the specified token.
--   `approve(address to, uint256 tokenId)`: Approves another address to transfer the given token.
--   `setApprovalForAll(address operator, bool approved)`: Approves or revokes approval for an operator to manage all tokens.
--   `transferFrom(address from, address to, uint256 tokenId)`: Transfers a token from one address to another.
--   `safeTransferFrom(address from, address to, uint256 tokenId)`: Safely transfers a token, checking that the receiver can handle ERC721 tokens.
--   `tokenURI(uint256 tokenId)`: Returns the URI of the specified token.
+    require(
+        _msgSender() == owner || isApprovedForAll(owner, _msgSender()),
+        "ERC721: approve caller is not owner nor approved for all"
+    );
 
-### Identity-Based Functionality
+    _approve(to, tokenId);
+}
+```
+These functions ensure that only authorized parties can interact with the vehicle's identity data, enhancing security.
 
--   `recordEntry(uint256 tokenId, uint256 timestamp)`: Records the timestamp of toll entry for a vehicle.
--   `payToll(uint256 tokenId)`: Allows payment of toll using native currency, verified by the token's identity data.
+### Security Protocols
+Security is a critical aspect of this implementation. The immutable nature of the blockchain ensures that DIDs and VCs cannot be altered or tampered with. Additionally, advanced cryptographic techniques such as digital signatures and encryption are employed to protect the integrity and confidentiality of the data.
 
-### Royalty Management (EIP-2981)
+### Comparison with Other Paradigms
+The ERC721-based implementation offers unique advantages in terms of uniqueness and traceability of identities. However, it may have limitations in scalability and flexibility compared to other standards such as ERC725 and ERC1056. This implementation serves as a benchmark to analyze the performance and security of using non-fungible tokens for digital identity management in CAVs.
 
--   `royaltyInfo(uint256 _tokenId, uint256 _salePrice)`: Returns the royalty information for the given token ID and sale price.
--   `_setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)`: Sets royalty information for a specific token.
--   `_setDefaultRoyalty(address receiver, uint96 feeNumerator)`: Sets default royalty information.
-
-Use Case: Decentralized Identity (DID)
---------------------------------------
-
-The ERC721 contract can be utilized for managing digital identities, particularly in the context of connected and autonomous vehicles (CAVs). This involves secure identity verification, toll payments, and eligibility checks for services like extended warranties. The contract provides a robust framework for handling identity-related transactions and maintaining secure ownership records on the blockchain.
-
-Directory Structure
--------------------
-
--   `contracts/`: Contains the smart contract code.
--   `scripts/`: Contains the deployment scripts.
--   `test/`: Contains the test scripts.
-
-Getting Started
----------------
+## Getting Started
 
 ### Prerequisites
-
--   Node.js (v14 or higher)
--   Hardhat
+- Node.js
+- Truffle
+- Ganache
 
 ### Installation
-
-Install the necessary dependencies:
-
-bash
-
-Copy code
-
-`npm install`
-
-### Compilation
-
-Compile the smart contracts:
-
-bash
-
-Copy code
-
-`npx hardhat compile`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/CVIN-ID/CVIN-ID-SCs.git
+   ```
+2. Navigate to the ERC721 implementation directory:
+   ```bash
+   cd CVIN-ID-SCs/ERC721
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
 ### Deployment
-
-#### Deploying the Regular ERC721 Contract
-
-Deploy the regular ERC721 contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployRegular.js --network localhost`
-
-#### Deploying the Monolithic ERC721 Contract
-
-Deploy the monolithic ERC721 contract to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployMonolithic.js --network localhost`
-
-#### Deploying Both Contracts
-
-Deploy both the regular and monolithic ERC721 contracts to a local network:
-
-bash
-
-Copy code
-
-`npx hardhat run scripts/deployBoth.js --network localhost`
+1. Start Ganache:
+   ```bash
+   ganache-cli
+   ```
+2. Compile and deploy the contracts:
+   ```bash
+   truffle compile
+   truffle migrate
+   ```
 
 ### Testing
+Run the test cases to ensure the smart contracts work as expected:
+```bash
+truffle test
+```
 
-#### Combined Test Suite
+## Contributing
+Contributions are welcome! Please follow the standard fork-and-pull request workflow:
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Create a new Pull Request
 
-Run the combined test suite for both regular and monolithic ERC721 contracts:
-
-bash
-
-Copy code
-
-`npx hardhat test test/combined.js`
-
-#### Extended Test Suite for Regular ERC721
-
-Run the extended test suite for the regular ERC721 contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/regularExtended.js`
-
-
-#### Identity-Based Test Suite for Regular ERC721
-
-Run the identity-based test suite for the regular ERC721 contract:
-
-bash
-
-Copy code
-
-`npx hardhat test test/identityBased.js`
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
