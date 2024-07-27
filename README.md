@@ -1,7 +1,7 @@
 
 # CVIN-ID Smart Contracts
 
-Welcome to the CVIN-ID Smart Contracts repository. This project is dedicated to developing a robust Self-Sovereign Identity (SSI) system specifically tailored for Connected and Autonomous Vehicles (CAVs) within the greater Internet of Vehicles (IoV) ecosystem. Our aim is to research the security, verifiability, and flexibility and overall performance and capabilities of digital identities and systems that are built on public blockchain through various standards including the W3C, MOBI VID, and different ERC standards that are capanble of functioning as a digital identity or part of a digital identity / SSI system.
+Welcome to the CVIN-ID Smart Contracts repository. CVIN is part of a Master of Applied Science (MASc) thesis at the University of British Columbia (UBC), conducted within the Electrical and Computer Engineering department and the Blockchain Interdisciplinary Research Cluster. This project is dedicated to developing a robust Self-Sovereign Identity (SSI) system specifically tailored for Connected and Autonomous Vehicles (CAVs) within the greater Internet of Vehicles (IoV) ecosystem. Our aim is to research the security, verifiability, and flexibility and overall performance and capabilities of digital identities and systems that are built on public blockchain through various standards including the W3C, MOBI VID, and different ERC standards that are capanble of functioning as a digital identity or part of a digital identity / SSI system.
 
 ## Overview
 
