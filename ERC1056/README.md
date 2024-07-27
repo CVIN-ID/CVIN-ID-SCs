@@ -1,90 +1,148 @@
-
 # Implementation III: ERC-1056 Lightweight Identity
 
 ## Overview
-This implementation variation focuses on utilizing the ERC-1056 standard for lightweight identity management of Connected and Autonomous Vehicles (CAVs). By leveraging the efficient and minimalistic nature of ERC-1056, we aim to create a streamlined identity management system that ensures each vehicle has a unique and verifiable identity on the blockchain.
 
-### ERC-1056 Standard
-ERC-1056, also known as the Lightweight Identity standard, offers a minimalistic and efficient approach to managing Decentralized Identifiers (DIDs) on the Ethereum blockchain. The primary objective of ERC-1056 is to provide a straightforward solution for creating and managing DIDs without the complexity and overhead associated with more comprehensive identity management systems.
+This repository details the implementation of the ERC-1056 Lightweight Identity standard, optimized for managing decentralized identities (DIDs) specifically tailored for Connected and Autonomous Vehicles (CAVs). Utilizing the minimalistic and efficient nature of ERC-1056, this implementation ensures that each vehicle maintains a unique and verifiable identity on the blockchain.
+
+## Components
+
+### Ethereum DID Registry
+
+The Ethereum DID Registry contract is the fundamental component responsible for managing the lifecycle of DIDs. This includes the creation, updating, and deactivation of DIDs, as well as the management of associated attributes and key rotations.
+
+#### Key Functions
+- **DID Creation**: Generates a unique identifier based on the owner's address and timestamp.
+- **Attribute Management**: Facilitates the addition, updating, and removal of attributes linked to a DID.
+- **Key Rotation**: Ensures secure key management through rotation mechanisms.
+
+#### Role in ERC-1056
+The Ethereum DID Registry provides the foundational layer for managing DIDs, ensuring their immutability and security on the blockchain. It directly supports the key features of ERC-1056, such as DID creation and management, attribute handling, and key rotation.
+
+### Ethr-DID Resolver
+
+The Ethr-DID Resolver is essential for translating on-chain DID information into a standardized DID document format, ensuring interoperability and usability. It interacts with the Ethereum DID Registry to fetch and interpret the data linked to a DID, making it accessible to applications and services.
+
+#### Key Functions
+- **resolve**: Retrieves the DID document by querying the Ethereum blockchain for relevant attributes and public keys.
+- **getPublicKey**: Obtains the public key associated with a DID.
+- **getService**: Accesses service endpoints linked to a DID.
+
+#### Role in ERC-1056
+The Ethr-DID Resolver plays a vital role in translating on-chain DID information into a standardized DID document format. This allows applications to easily retrieve and utilize DID data, ensuring interoperability and usability within the ERC-1056 framework.
+
+### Ethr-DID Library
+
+The Ethr-DID library is a JavaScript library designed to simplify the creation and management of DIDs within applications. It provides developers with tools to interact with the Ethereum DID Registry and the Ethr-DID Resolver, streamlining the integration of decentralized identities into their projects.
 
 #### Key Features
-1. **DID Creation and Management**: Facilitates the creation, updating, and deactivation of DIDs on the Ethereum blockchain.
-2. **Attribute Management**: Supports the addition, updating, and removal of attributes associated with DIDs.
-3. **Key Rotation**: Enables secure key management by allowing the rotation of keys linked to a DID.
-4. **Event Logging**: Maintains a log of all events related to the DID, ensuring transparency and traceability.
+- **DID Creation**: Allows developers to programmatically create new DIDs.
+- **Attribute Management**: Provides functions to add, update, and remove attributes associated with DIDs.
+- **Key Management**: Facilitates key rotation and delegation, ensuring secure identity management.
 
-### Implementation Details
+#### Role in ERC-1056
+The Ethr-DID library acts as a bridge between application developers and the underlying Ethereum DID infrastructure. By abstracting the complexities of smart contract interactions, it enables seamless integration of DIDs into various applications, supporting the broader adoption of ERC-1056.
 
-#### Decentralized Identifiers (DIDs)
-In this implementation, each CAV is assigned a unique DID using the ERC-1056 standard. The DID is created and managed through the registry contract, which ensures immutability and security. The `createDID` function registers new DIDs as follows:
-```solidity
-function createDID(address owner) external returns (bytes32 did) {
-    did = keccak256(abi.encodePacked(owner, block.timestamp));
-    emit DIDCreated(did, owner);
-}
-```
-This method guarantees that each DID is unique and securely managed.
+## Integration and Functionality
 
-#### Attribute Management
-Attributes associated with the DIDs are managed using the `setAttribute` and `removeAttribute` functions. These attributes can include vital information about the vehicle, such as make, model, and year:
-```solidity
-function setAttribute(bytes32 did, bytes32 name, bytes32 value) external {
-    require(didOwners[did] == msg.sender, "Not authorized");
-    attributes[did][name] = value;
-    emit AttributeSet(did, name, value);
-}
+### How They Work Together
+1. **DID Creation and Management**: Developers use the Ethr-DID library to create and manage DIDs. These DIDs are registered on the Ethereum blockchain using the Ethereum DID Registry contract.
+2. **Attribute and Key Management**: Attributes and keys associated with the DIDs are managed through the Ethereum DID Registry. The Ethr-DID library provides an interface for these operations.
+3. **DID Resolution**: When an application needs to resolve a DID, it uses the Ethr-DID Resolver. The resolver queries the Ethereum DID Registry to fetch the associated attributes and public keys, then translates this data into a DID document format.
 
-function removeAttribute(bytes32 did, bytes32 name) external {
-    require(didOwners[did] == msg.sender, "Not authorized");
-    delete attributes[did][name];
-    emit AttributeRemoved(did, name);
-}
-```
-These functions ensure that attributes are securely managed and verifiable.
+## Getting Started
 
-#### Key Management and Rotation
-ERC-1056 supports secure key management through key rotation, which is essential for maintaining the security of DIDs over time. The `rotateKey` function allows the owner of a DID to update the associated keys:
-```solidity
-function rotateKey(bytes32 did, address newKey) external {
-    require(didOwners[did] == msg.sender, "Not authorized");
-    keys[did] = newKey;
-    emit KeyRotated(did, newKey);
-}
-```
-This mechanism ensures that the DID remains secure even if the original key is compromised.
+### Prerequisites
+- Node.js
+- Truffle
+- Ganache
 
-## Comparison with ERC721 Implementation
+### Installation
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/CVIN-ID/CVIN-ID-SCs.git
+    ```
+
+2. Navigate to the ERC1056 implementation directory:
+    ```bash
+    cd CVIN-ID-SCs/ERC1056
+    ```
+
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
+
+### Deployment
+
+1. Start Ganache:
+    ```bash
+    ganache-cli
+    ```
+
+2. Compile and deploy the contracts:
+    ```bash
+    truffle compile
+    truffle migrate
+    ```
+
+### Testing
+
+Run the test cases to ensure the smart contracts work as expected:
+    ```bash
+    truffle test
+    ```
+
+## Comparison with Other Standards
 
 ### ERC721-Based Implementation
-- **Nature of Tokens**: ERC721 is designed for non-fungible tokens, making each token unique. This uniqueness is leveraged for DIDs in CAVs, ensuring that each vehicle has a distinct identity.
-- **Metadata**: Verifiable Credentials (VCs) are stored as metadata within the ERC721 tokens, linking additional information to the DIDs.
-- **Ownership and Transfer**: ERC721’s built-in functions handle ownership and transfer of tokens, ensuring secure management of digital identities.
-- **Security and Immutability**: The immutable nature of the blockchain ensures that DIDs and VCs cannot be altered or tampered with, providing a high level of security.
-- **Use Case**: Ideal for applications where distinct, non-interchangeable identities are necessary, such as CAVs.
 
-### ERC-1056 Lightweight Identity
-- **Efficiency**: ERC-1056 is designed to be lightweight and efficient, making it suitable for applications where simplicity and minimal overhead are paramount.
-- **Flexibility**: Allows for flexible attribute management and key rotation, tailored for dynamic identity management needs.
-- **Use Case**: Suitable for decentralized identity management where efficiency and simplicity are crucial.
-
-## Comparison with ERC725 Implementation
+- **Nature of Tokens**: ERC721 employs non-fungible tokens (NFTs) to represent unique digital identities, suitable for distinct, non-interchangeable identities like those of vehicles. Conversely, the Ethereum DID Registry focuses on creating and managing DIDs without the overhead of token management.
+- **Attribute Storage**: While ERC721 stores attributes as metadata within the tokens, the Ethereum DID Registry directly manages attributes linked to DIDs, offering a more streamlined approach.
+- **Standardization and Resolution**: ERC721 does not inherently support the resolution of identity information into standardized formats. The Ethr-DID Resolver component of ERC-1056 translates on-chain DID information into DID documents, ensuring interoperability and easier integration with other systems.
 
 ### ERC725-Based Implementation
-- **Proxy Accounts**: ERC725 focuses on creating proxy accounts that can hold and manage various types of data, including identity information.
-- **Extensibility**: ERC725x and ERC725y extend the base standard, providing additional functionalities for more complex identity management.
-- **Flexibility**: Highly flexible in managing different types of identity-related data and executing operations.
-- **Security and Control**: Offers robust security features and fine-grained control over identity data and operations.
-- **Use Case**: Best suited for comprehensive identity management systems requiring extensive data handling and complex operations.
 
-### ERC-1056 Lightweight Identity
-- **Simplicity**: More straightforward compared to ERC725, focusing solely on DIDs without the added complexity of proxy accounts.
-- **Attribute Management**: Allows for easy addition, updating, and removal of attributes directly on the DID, without needing a separate account structure.
-- **Key Management**: Provides robust key rotation and delegation mechanisms.
-- **Scalability**: Designed to be scalable for large-scale DID management without the overhead of complex proxy accounts.
-- **Use Case**: Ideal for straightforward, scalable DID management systems with less need for complex data handling and operations.
+- **Proxy Accounts vs. Direct Management**: ERC725 utilizes proxy accounts to manage various data types, whereas the Ethereum DID Registry manages DIDs and attributes directly on the blockchain. This makes ERC-1056 simpler and more efficient for DID management.
+- **Flexibility**: ERC725 provides more flexibility in managing diverse identity-related data but with added complexity. The Ethereum DID Registry simplifies the process by focusing solely on DIDs and their attributes.
+- **Key Management**: Both ERC725 and ERC-1056 support secure key management, but ERC-1056 achieves this in a more streamlined manner. The Ethr-DID library facilitates key rotation and delegation, enhancing security without adding unnecessary complexity.
 
-## Summary
-The ERC-1056 Lightweight Identity standard provides an efficient and straightforward approach to managing DIDs on the Ethereum blockchain. This implementation is particularly suitable for applications requiring minimal overhead and high efficiency. In contrast, the ERC721-based implementation leverages the uniqueness of NFTs for secure, non-fungible digital identities, making it ideal for applications like CAVs. The ERC725-based implementation offers a comprehensive and flexible solution for complex identity management needs, extending beyond simple DID management to encompass extensive data handling and proxy operations.
+## Expanded Summary
 
-By understanding the strengths and weaknesses of each approach, we can choose the most appropriate standard for their specific use case, ensuring the best balance of security, flexibility, and scalability.
-just a placeholder for now....
+The ERC-1056 implementation, through its components—the Ethereum DID Registry, Ethr-DID Resolver, and Ethr-DID library—offers a specialized, efficient, and straightforward approach to decentralized identity management. This implementation is particularly suitable for applications requiring minimal overhead and high efficiency.
+
+### Lightweight Identity Focus
+
+The ERC-1056 standard is designed with a focus on lightweight identity management, which offers several significant benefits:
+- **Offline (Off-Chain) Identity Creation**: ERC-1056 allows for the creation of identities offline, reducing the need for constant on-chain interactions. This helps in saving gas costs associated with identity creation and management.
+- **Cost Efficiency**: By minimizing on-chain operations, ERC-1056 ensures that the overall cost of managing identities is significantly lower compared to standards that rely heavily on on-chain transactions.
+- **Off-Chain Utility**: The ability to manage and utilize identities off-chain provides greater flexibility and efficiency. These identities can still be anchored on-chain, ensuring their verifiability and security without incurring high costs.
+- **On-Chain Anchoring**: Identities created and managed off-chain can be anchored on the blockchain, providing a secure and immutable record of their existence. This approach combines the best of both worlds—efficient off-chain management with the security of on-chain verification.
+
+This lightweight approach makes ERC-1056 particularly suitable for applications where cost efficiency and off-chain utility are crucial, such as in Connected and Autonomous Vehicles (CAVs) and the Internet of Things (IoT).
+
+### Benefits of ERC-1056
+
+- **Specialized for Identity Management**: ERC-1056 is purpose-built for decentralized identity management, providing targeted functionalities that are more efficient for this specific use case.
+- **Interoperability and Standardization**: The Ethr-DID Resolver ensures that DID information is easily interpretable and compatible with other systems, enhancing interoperability.
+- **Ease of Integration**: The Ethr-DID library simplifies the process of integrating decentralized identities into applications, making it accessible for developers without deep blockchain expertise.
+- **Scalability**: Designed to be lightweight, ERC-1056 can efficiently handle large-scale DID management without the overhead associated with more complex standards.
+
+### Comparison with ERC721
+
+- **Identity Focus**: ERC-1056 is explicitly designed for decentralized identity management, whereas ERC721, while capable of representing identities through NFTs, is primarily intended for unique digital assets. This makes ERC-1056 more suitable for applications where managing identities is the primary concern.
+- **Metadata Management**: In ERC721, identity attributes are stored as metadata within NFTs, which can complicate direct attribute management. ERC-1056, with its Ethereum DID Registry, allows for direct management of attributes associated with DIDs, providing a more streamlined and efficient solution.
+- **Standardization and Resolution**: ERC721 does not inherently support the resolution of identity information into standardized formats. The Ethr-DID Resolver component of ERC-1056 translates on-chain DID information into DID documents, ensuring interoperability and easier integration with other systems.
+- **Library Support**: ERC721 lacks a dedicated library for identity management, requiring more manual smart contract interactions. The Ethr-DID library simplifies these interactions, enabling developers to integrate decentralized identities into their applications more seamlessly.
+
+### Comparison with ERC725
+
+- **Simplicity and Efficiency**: ERC-1056 is designed to be lightweight and efficient, focusing on core identity management functions without the added complexity of proxy accounts and extensive data handling found in ERC725. This makes ERC-1056 more suitable for straightforward DID management use cases.
+- **Direct Attribute Management**: While ERC725 offers flexibility in managing diverse identity-related data through proxy accounts, ERC-1056 provides a simpler method for directly managing attributes associated with DIDs. This reduces complexity and overhead.
+- **Key Rotation and Delegation**: Both ERC725 and ERC-1056 support secure key management, but ERC-1056 does so in a more streamlined manner. The Ethr-DID library facilitates key rotation and delegation, enhancing security without adding unnecessary complexity.
+
+## Conclusion
+
+The ERC-1056 implementation, through its components—the Ethereum DID Registry, Ethr-DID Resolver, and Ethr-DID library—provides a comprehensive, efficient, and streamlined approach to decentralized identity management. This implementation is particularly well-suited for applications that require high efficiency and minimal overhead, making it an excellent choice for managing decentralized identities in Connected and Autonomous Vehicles (CAVs) and other similar use cases.
+
+For detailed comparisons and comprehensive overviews of each component, refer to the respective summary documents: Ethereum DID Registry, Ethr-DID Resolver, and Ethr-DID Library.
