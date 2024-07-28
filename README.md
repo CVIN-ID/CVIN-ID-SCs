@@ -17,17 +17,26 @@ ERC-721 is the foundational standard for unique digital identities. It employs n
 #### [Implementation II: ERC-725 - Proxy Account Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC725)
 ERC-725 introduces a flexible proxy account mechanism for managing decentralized identities. It enhances key management, data storage, and proxy execution capabilities, making it suitable for more dynamic identity systems. This implementation allows vehicles to interact with various smart contracts securely and flexibly.
 
-#### [Implementation III: ERC-735 - Claim Holder Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC735)
-ERC-735 focuses on the management of claims and credentials. It allows for the issuance and verification of claims linked to vehicle identities, integrating seamlessly with the SSI system. This implementation is pivotal for handling verified credentials and ensuring the integrity of vehicle data.
+#### [Implementation III: ERC-1155 - Multi-Token Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC1155)
+ERC-1155 introduces a multi-token standard capable of handling both fungible and non-fungible tokens within a single contract. This versatility is crucial for managing various vehicle-related assets, from ownership tokens to service history and payment tokens. It enables efficient batch transfers and comprehensive token management.
 
 #### [Implementation IV: ERC-725x,y - Enhanced Proxy Account Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC725xy)
 Building upon ERC-725, this enhanced standard offers advanced key and data management features, optimized for CAVs. The ERC-725x,y implementation ensures greater security and flexibility, supporting the broader CVIN thesis by managing complex identity attributes and permissions efficiently.
 
-#### [Implementation V: ERC-1155 - Multi-Token Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC1155)
-ERC-1155 introduces a multi-token standard capable of handling both fungible and non-fungible tokens within a single contract. This versatility is crucial for managing various vehicle-related assets, from ownership tokens to service history and payment tokens. It enables efficient batch transfers and comprehensive token management.
-
-#### [Implementation VI: ERC-1056 - Lightweight Identity Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC1056)
+#### [Implementation V: ERC-1056 - Lightweight Identity Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC1056)
 ERC-1056 provides a lightweight approach to managing decentralized identities directly on the blockchain. It focuses on simplicity and efficiency, making it ideal for scenarios where minimal overhead is necessary. This implementation is beneficial for quick identity resolution and basic attribute management.
+
+#### [Implementation VI: LSP8 - ~~~~~ ](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/LSP8)
+~
+
+#### [Implementation VII: ERC-4337 -  ](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/LSP8)
+~
+
+#### [Implementation VIIi: CVIN Combined Approach -  ](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/CVIN-combbined)
+~
+
+#### [Implementation VC-I:  ERC-735 - Claim Holder Standard](https://github.com/CVIN-ID/CVIN-ID-SCs/tree/main/ERC735)
+ERC-735 focuses on the management of claims and credentials. It allows for the issuance and verification of claims linked to vehicle identities, integrating seamlessly with the SSI system. This implementation is pivotal for handling verified credentials and ensuring the integrity of vehicle data.
 
 ## Deep Dive Investigations
 
