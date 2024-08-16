@@ -30,7 +30,7 @@ I tested a variety of sandboxes and full stack options and found that a unified 
 - Integrates cloud services, which are essential.
 
 ### Stage 5: Generic API Connection Hook
-- Provides a generic API connection hook for flexibility.
+- Provides a generic API connection hook for flexibility. (Stage 4 and 5 are once again generic base cases that represent on-chain reads, cached DBs of credentials, etc)
 
 ### Stage 6: Integration of Stages 1-5
 - Combines all the above components into a cohesive system.
@@ -48,14 +48,10 @@ I tested a variety of sandboxes and full stack options and found that a unified 
   - Outputting results.
 
 ### Stage 10: Presentation
-- Presents stages 0-9 in a refined base case that demonstrates the system's versatility (like a Swiss Army knife) to build anything and everything. It is designed to adapt to modern methods and tools, ensuring speed and efficiency at a low cost in terms of time and money.
+- Presents stages 0-9 in a refined base case that demonstrates the system's versatility (like a Swiss Army knife) to build and test anything necessary. It is designed to adapt to modern methods and tools, ensuring speed and efficiency to test and ship things out (such as the 6 implementation variations of CVIN-ID).
 
 
-# Web3-Enabled Calculator Sandbox Guide - FULL COMPLETEION OF STAGE 0,1, and 2 across stack, tool, and methodology alternatives.
-
-
-## STAGE 0,1 and 2: From the ground up...
-
+# A Custom - DApp Sandbox and Guide for CVIN
 
 ---------------------------------------------------------------------------------------------------------------
 
